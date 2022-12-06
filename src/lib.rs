@@ -1,3 +1,4 @@
+pub mod bitset;
 pub mod convert;
 pub mod io;
 pub mod math;
