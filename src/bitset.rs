@@ -34,6 +34,20 @@ impl Bitset {
             bitset: self.bitset,
         }
     }
+
+    /// Intersect with another bitset.
+    pub fn intersect(&self, other: Self) -> Bitset {
+        Bitset {
+            bitset: self.bitset & other.bitset,
+        }
+    }
+
+    /// Union with another bitset.
+    pub fn union(&self, other: Self) -> Bitset {
+        Bitset {
+            bitset: self.bitset | other.bitset,
+        }
+    }
 }
 
 /// Iterate over positions with 1 bit set.
@@ -80,5 +94,35 @@ mod tests {
         bitset.set(2);
         let indices: Vec<u32> = bitset.iter().collect();
         assert_eq!(vec![1, 2], indices);
+    }
+
+    #[test]
+    fn test_intersect() {
+        let mut b1 = Bitset::new();
+        b1.set(1);
+        b1.set(2);
+        let mut b2 = Bitset::new();
+        b2.set(2);
+        b2.set(3);
+        let actual = b1.intersect(b2);
+        let mut expected = Bitset::new();
+        expected.set(2);
+        assert_eq!(expected, actual);
+    }
+
+    #[test]
+    fn test_union() {
+        let mut b1 = Bitset::new();
+        b1.set(1);
+        b1.set(2);
+        let mut b2 = Bitset::new();
+        b2.set(2);
+        b2.set(3);
+        let actual = b1.union(b2);
+        let mut expected = Bitset::new();
+        expected.set(1);
+        expected.set(2);
+        expected.set(3);
+        assert_eq!(expected, actual);
     }
 }
