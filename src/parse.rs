@@ -39,15 +39,13 @@ pub fn integer(input: &[u8], ignore_prefix: bool) -> ParseResult<&[u8], i64> {
     let mut start = 0;
     if ignore_prefix {
         for (i, &b) in input.iter().enumerate() {
-            if b >= b'0' && b <= b'9' {
+            if (b'0'..=b'9').contains(&b) {
                 start = i;
                 break;
             }
         }
-    } else {
-        if input[start] == b'-' || input[start] == b'+' {
-            start += 1;
-        }
+    } else if input[start] == b'-' || input[start] == b'+' {
+        start += 1;
     }
     positive(&input[start..], false).map(|res| {
         (

@@ -1,4 +1,4 @@
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub struct Bitset {
     bitset: u64,
 }
@@ -69,7 +69,7 @@ impl Iterator for BitsetIterator {
         let t = self.bitset & 0_u64.wrapping_sub(self.bitset);
         let r = self.bitset.trailing_zeros();
         self.bitset ^= t;
-        return Some(r);
+        Some(r)
     }
 }
 
