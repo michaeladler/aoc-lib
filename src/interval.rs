@@ -31,6 +31,16 @@ impl ClosedInterval {
         };
         lhs.b < rhs.a
     }
+
+    /// Intersect with interval.
+    pub fn intersect(&self, interval: &ClosedInterval) -> Option<ClosedInterval> {
+        let a = std::cmp::max(self.a, interval.a);
+        let b = std::cmp::min(self.b, interval.b);
+        if a <= b {
+            return Some(ClosedInterval::new(a, b));
+        }
+        None
+    }
 }
 
 /// Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping
@@ -92,6 +102,13 @@ mod tests {
         assert_eq!(false, y.disjoint(&x));
         assert_eq!(true, y.disjoint(&z));
         assert_eq!(true, z.disjoint(&y));
+    }
+
+    #[test]
+    fn test_intersect() {
+        let x = ClosedInterval::new(2, 5);
+        let y = ClosedInterval::new(3, 6);
+        assert_eq!(Some(ClosedInterval::new(3, 5)), x.intersect(&y));
     }
 
     #[test]
