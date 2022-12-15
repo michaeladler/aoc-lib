@@ -1,28 +1,29 @@
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord)]
-pub struct Interval {
+/// Represents the interval [a, b].
+pub struct ClosedInterval {
     pub a: i64,
     pub b: i64,
 }
 
-impl Interval {
-    pub fn new(a: i64, b: i64) -> Interval {
+impl ClosedInterval {
+    pub fn new(a: i64, b: i64) -> ClosedInterval {
         debug_assert!(a <= b);
-        Interval { a, b }
+        ClosedInterval { a, b }
     }
 
-    /// Test if `other` is a subset of `self`.
-    pub fn contains(&self, other: &Interval) -> bool {
-        self.a <= other.a && other.b <= self.b
+    /// Test if `interval` is a subset of `self`.
+    pub fn contains(&self, interval: &ClosedInterval) -> bool {
+        self.a <= interval.a && interval.b <= self.b
     }
 
-    /// Test if the intersection is non-empty.
-    pub fn overlaps(&self, other: &Interval) -> bool {
-        let (left, right) = if self <= other {
-            (self, other)
+    /// Test if the intervals are disjoint.
+    pub fn disjoint(&self, interval: &ClosedInterval) -> bool {
+        let (lhs, rhs) = if self <= interval {
+            (self, interval)
         } else {
-            (other, self)
+            (interval, self)
         };
-        left.b >= right.a
+        lhs.b < rhs.a
     }
 }
 
@@ -32,20 +33,24 @@ mod tests {
 
     #[test]
     fn test_contains() {
-        let x = Interval::new(2, 5);
-        let y = Interval::new(3, 5);
+        let x = ClosedInterval::new(2, 5);
+        let y = ClosedInterval::new(3, 5);
+        assert_eq!(true, x.contains(&x));
         assert_eq!(true, x.contains(&y));
         assert_eq!(false, y.contains(&x));
 
-        let z = Interval::new(3, 6);
+        let z = ClosedInterval::new(3, 6);
         assert_eq!(false, x.contains(&z));
     }
 
     #[test]
     fn test_overlaps() {
-        let x = Interval::new(2, 5);
-        let y = Interval::new(3, 6);
-        assert_eq!(true, x.overlaps(&y));
-        assert_eq!(true, y.overlaps(&x));
+        let x = ClosedInterval::new(2, 5);
+        let y = ClosedInterval::new(3, 6);
+        let z = ClosedInterval::new(7, 8);
+        assert_eq!(false, x.disjoint(&y));
+        assert_eq!(false, y.disjoint(&x));
+        assert_eq!(true, y.disjoint(&z));
+        assert_eq!(true, z.disjoint(&y));
     }
 }
