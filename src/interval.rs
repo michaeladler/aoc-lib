@@ -11,6 +11,12 @@ impl ClosedInterval {
         ClosedInterval { a, b }
     }
 
+    /// Count (whole) points in the interval.
+    /// Example: [1, 3] contains 3 points.
+    pub fn len(&self) -> usize {
+        (self.b - self.a) as usize + 1
+    }
+
     /// Test if `interval` is a subset of `self`.
     pub fn contains(&self, interval: &ClosedInterval) -> bool {
         self.a <= interval.a && interval.b <= self.b
@@ -114,5 +120,11 @@ mod tests {
             let result = merge_intervals(&intervals);
             assert_eq!(vec![ClosedInterval::new(1, 5),], result, "example 2");
         }
+    }
+
+    #[test]
+    fn test_len() {
+        assert_eq!(3, ClosedInterval::new(1, 3).len());
+        assert_eq!(6, ClosedInterval::new(-2, 3).len());
     }
 }
