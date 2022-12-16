@@ -1,4 +1,4 @@
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Hash)]
 pub struct Bitset {
     bitset: u64,
 }
