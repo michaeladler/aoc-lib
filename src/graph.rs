@@ -12,14 +12,21 @@ impl<const N: usize> AdjacencyMatrix<N> {
         }
     }
 
+    /// Add a directed edge.
+    pub fn add_edge(&mut self, from: usize, to: usize, weight: i32) {
+        self.weights[from][to] = weight;
+    }
+
+    /// Add an undirected edge.
     pub fn add_edge_undirected(&mut self, from: usize, to: usize, weight: i32) {
         self.weights[from][to] = weight;
         self.weights[to][from] = weight;
     }
 
-    ///The Floyd Warshall Algorithm is for solving all pairs of shortest-path problems. The problem
-    ///is to find the shortest distances between every pair of vertices in a given edge-weighted
-    ///directed graph.
+    /// The Floyd Warshall Algorithm is for solving all pairs of shortest-path problems. The problem
+    /// is to find the shortest distances between every pair of vertices in a given edge-weighted
+    /// directed graph.
+    /// Complexity: O(n^3)
     pub fn floyd_warshall(&self) -> [[i32; N]; N] {
         let mut dist = self.weights.clone();
         /* Add all vertices one by one to the set of intermediate vertices.
@@ -47,5 +54,41 @@ impl<const N: usize> AdjacencyMatrix<N> {
             }
         }
         dist
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_floyd_warshall() {
+        let mut g: AdjacencyMatrix<4> = AdjacencyMatrix::new();
+        /*
+               10
+         (0)------->(3)
+          |         /|\
+        5 |          |
+          |          | 1
+         \|/   3     |
+         (1)------->(2)
+        */
+        g.add_edge(0, 3, 10);
+        g.add_edge(0, 1, 5);
+        g.add_edge(1, 2, 3);
+        g.add_edge(2, 3, 1);
+        for i in 0..4 {
+            g.add_edge(i, i, 0);
+        }
+        let dist = g.floyd_warshall();
+        assert_eq!(
+            vec![
+                [0, 5, 8, 9],
+                [INF, 0, 3, 4],
+                [INF, INF, 0, 1],
+                [INF, INF, INF, 0],
+            ],
+            dist
+        );
     }
 }
