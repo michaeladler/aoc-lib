@@ -1,5 +1,6 @@
 pub mod bitset;
 pub mod convert;
+pub mod graph;
 pub mod interval;
 pub mod io;
 pub mod math;
