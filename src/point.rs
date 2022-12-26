@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 #[derive(Debug, PartialEq, Eq, Copy, Clone, PartialOrd, Ord, Hash)]
 pub struct Point2D {
     pub x: i64,
@@ -11,14 +13,52 @@ impl Point2D {
 
     /// Compute the Manhattan distance between `self` and `other`.
     pub fn manhattan(&self, other: &Point2D) -> i64 {
-        (self.y - other.y).abs() + (self.x - other.x).abs()
+        (self.x - other.x).abs() + (self.y - other.y).abs()
     }
 
     /// Compute the Euclidean squared distance between `self` and `other`.
     pub fn euclidean_squared(&self, other: &Point2D) -> i64 {
         let dx = self.x - other.x;
         let dy = self.y - other.y;
-        (dx * dx) + (dy * dy)
+        dx * dx + dy * dy
+    }
+}
+
+impl Display for Point2D {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({},{})", self.x, self.y)
+    }
+}
+
+#[derive(Debug, PartialEq, Eq, Copy, Clone, PartialOrd, Ord, Hash)]
+pub struct Point3D {
+    pub x: i64,
+    pub y: i64,
+    pub z: i64,
+}
+
+impl Point3D {
+    pub fn new(x: i64, y: i64, z: i64) -> Self {
+        Point3D { x, y, z }
+    }
+
+    /// Compute the Manhattan distance between `self` and `other`.
+    pub fn manhattan(&self, other: &Point3D) -> i64 {
+        (self.x - other.x).abs() + (self.y - other.y).abs() + (self.z - other.z).abs()
+    }
+
+    /// Compute the Euclidean squared distance between `self` and `other`.
+    pub fn euclidean_squared(&self, other: &Point3D) -> i64 {
+        let dx = self.x - other.x;
+        let dy = self.y - other.y;
+        let dz = self.z - other.z;
+        dx * dx + dy * dy + dz * dz
+    }
+}
+
+impl Display for Point3D {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({},{},{})", self.x, self.y, self.z)
     }
 }
 
