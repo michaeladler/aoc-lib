@@ -1,4 +1,5 @@
 use std::fmt::Display;
+use std::ops;
 
 #[derive(Debug, PartialEq, Eq, Copy, Clone, PartialOrd, Ord, Hash)]
 pub struct Point2D {
@@ -21,6 +22,28 @@ impl Point2D {
         let dx = self.x - other.x;
         let dy = self.y - other.y;
         dx * dx + dy * dy
+    }
+}
+
+impl ops::Add<Point2D> for Point2D {
+    type Output = Point2D;
+
+    fn add(self, rhs: Point2D) -> Self::Output {
+        Self {
+            x: self.x + rhs.x,
+            y: self.y + rhs.y,
+        }
+    }
+}
+
+impl ops::Sub<Point2D> for Point2D {
+    type Output = Point2D;
+
+    fn sub(self, rhs: Point2D) -> Self::Output {
+        Self {
+            x: self.x - rhs.x,
+            y: self.y - rhs.y,
+        }
     }
 }
 
@@ -53,6 +76,30 @@ impl Point3D {
         let dy = self.y - other.y;
         let dz = self.z - other.z;
         dx * dx + dy * dy + dz * dz
+    }
+}
+
+impl ops::Add<Point3D> for Point3D {
+    type Output = Point3D;
+
+    fn add(self, rhs: Point3D) -> Self::Output {
+        Self {
+            x: self.x + rhs.x,
+            y: self.y + rhs.y,
+            z: self.z + rhs.z,
+        }
+    }
+}
+
+impl ops::Sub<Point3D> for Point3D {
+    type Output = Point3D;
+
+    fn sub(self, rhs: Point3D) -> Self::Output {
+        Self {
+            x: self.x - rhs.x,
+            y: self.y - rhs.y,
+            z: self.z - rhs.z,
+        }
     }
 }
 
