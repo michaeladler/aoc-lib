@@ -49,7 +49,7 @@ impl ops::Sub<Point2D> for Point2D {
 
 impl Display for Point2D {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({},{})", self.x, self.y)
+        write!(f, "({}, {})", self.x, self.y)
     }
 }
 
@@ -105,7 +105,7 @@ impl ops::Sub<Point3D> for Point3D {
 
 impl Display for Point3D {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "({},{},{})", self.x, self.y, self.z)
+        write!(f, "({}, {}, {})", self.x, self.y, self.z)
     }
 }
 
