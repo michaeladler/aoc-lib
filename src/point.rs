@@ -1,7 +1,7 @@
 use std::fmt::Display;
 use std::ops;
 
-#[derive(Debug, PartialEq, Eq, Copy, Clone, PartialOrd, Ord, Hash)]
+#[derive(Debug, PartialEq, Eq, Copy, Clone, PartialOrd, Ord, Hash, Default)]
 pub struct Point2D {
     pub x: i64,
     pub y: i64,
@@ -53,7 +53,7 @@ impl Display for Point2D {
     }
 }
 
-#[derive(Debug, PartialEq, Eq, Copy, Clone, PartialOrd, Ord, Hash)]
+#[derive(Debug, PartialEq, Eq, Copy, Clone, PartialOrd, Ord, Hash, Default)]
 pub struct Point3D {
     pub x: i64,
     pub y: i64,
