@@ -17,6 +17,10 @@ impl ClosedInterval {
         (self.b - self.a) as usize + 1
     }
 
+    pub fn is_empty(&self) -> bool {
+        self.a > self.b
+    }
+
     /// Test if `interval` is a subset of `self`.
     pub fn contains(&self, interval: &ClosedInterval) -> bool {
         self.a <= interval.a && interval.b <= self.b

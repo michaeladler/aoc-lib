@@ -28,7 +28,7 @@ impl<const N: usize> AdjacencyMatrix<N> {
     /// directed graph.
     /// Complexity: O(n^3)
     pub fn floyd_warshall(&self) -> [[i32; N]; N] {
-        let mut dist = self.weights.clone();
+        let mut dist = self.weights;
         /* Add all vertices one by one to the set of intermediate vertices.
         ---> Before start of an iteration, we have shortest distances between all pairs of vertices
         such that the shortest distances consider only the vertices in set {0, 1, 2, .. k-1} as
@@ -54,6 +54,12 @@ impl<const N: usize> AdjacencyMatrix<N> {
             }
         }
         dist
+    }
+}
+
+impl<const N: usize> Default for AdjacencyMatrix<N> {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
